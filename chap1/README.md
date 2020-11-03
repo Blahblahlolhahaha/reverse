@@ -121,11 +121,11 @@ When packed program is run, wrapper program runs to decompress the packed file a
     * Executable will grow in size
 * Hard to differentiate between statically linked libraries code compared to actual code as PE file headers doesnt show it
 
-## Runtime linking 
+### Runtime linking 
 * Use freqeuently in packed malware 
 * Programs only connect to libraries when that function starts
 
-## Dynamic Linking
+### Dynamic Linking
 * Some Windows function allow importing of linked functions not listed in a program's file header
     * LoadLibrary and GetProcAddress
         * allow programs to access any function  in any library on the system
