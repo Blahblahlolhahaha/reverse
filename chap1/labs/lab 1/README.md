@@ -14,8 +14,7 @@
    
     <img src="img/peid.jpg">
 
-4. The dll imports KERNEL32.DLL, which is mainly used for file, memory and hardware manipulation, ws2_32.dll which is used for networking while the dll also imports msvcrt.dll which ships in the standard C library functions. The exe imports KERNEL32.DLL and msvcrt.dll.
-
+4. The dll imports KERNEL32.DLL, which is mainly used for file, memory and hardware manipulation, ws2_32.dll which is used for networking while the exe also imports msvcrt.dll which ships in the standard C library functions.
     Imports for the exe:
 
      <img src="img/imports_exe.png">
