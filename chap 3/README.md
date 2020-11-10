@@ -85,3 +85,50 @@
       * Network
         * Can show any ports on which the malware is listening
       * <img src="img/autofilters.png">
+
+## Viewing Processes with Process Explorer
+* An powerful task manager
+* Can provide valuable insight currently running on a system
+* Should be running while running analysis
+* Can list 
+  * Active processes
+  * DLLs loaded by a process
+  * Various process properties
+  * Overall system information
+* Can:
+  * Kill a process
+  * Log out users
+  * lanuch and validate processes
+* ### Process Explorer Display
+  * Displays processes running on a system and shows them in a tree structure that displays child and parent relationships
+  * Five columns
+    * Process name
+    * Process identifier
+    * CPU usage
+    * Description
+    * Company Name
+  * Updaes every second
+  * Services is pink
+  * Processes in blue
+  * New processes in green
+  * Terminated proceses in red
+    * Green and red highlights are temporary
+  * When analyzing malware, watch out for changes/new processes and investigate them thoroughly
+  * <img src="img/process.png">
+  * Can display information for each process
+    * Can display file handles, mutexes, events and a lot more for DLLs loaded into memory
+    * Can display all active threads and active connectons/ports on which the process is listening and path on the disk to the executable
+* Can use verify option to ensure that the image on disk is a Microsoft signed binary
+  * Can ensure file on disk is not corrupted
+  * However it is useless when malware overwrite the executable's memory space with a malicious executable 
+    * Provides same priveilages as the program that is replaced
+    * Image in memory will be different then image on disk but verify only verifies image on disk and not the memory.
+    * A good way to verify will be to use the Strings tab on the process properties window.
+      * Strings inside the image will differ from the memory if process replacement happened
+  * ### Using Dependancy Walker
+    * Can launch Dependancy Walker on a running process
+    * Can also search for a handle/DLL
+      * Useful when a malicious DLL is found on disk and want to find out if that DLL is being used by any other processes
+    * Can compare DLL list in Process Explorer to the imports shown in Dependency Walker
+  * ### Analyzing Malicious Documents
+    * When analyzing word documents and PDFs, can use Process Explorer to open the document and check whether if it launch any processes which can be seen in Process Explorer and track down the path of the malware
