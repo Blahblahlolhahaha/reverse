@@ -132,3 +132,56 @@
     * Can compare DLL list in Process Explorer to the imports shown in Dependency Walker
   * ### Analyzing Malicious Documents
     * When analyzing word documents and PDFs, can use Process Explorer to open the document and check whether if it launch any processes which can be seen in Process Explorer and track down the path of the malware
+
+## Comparing Registry Snapshots with Regshot
+* Regshot is an open source registry comparision tool that allows us to take and compare two registry snapshots
+* Take a snapshot before and after running the malware to find out what registry values were created/modified by the malware
+  
+<img src="img/regshot.png" height=600>
+
+## Faking a Network
+* Malware often beacons out and communicate with a C2 server
+* Can create a fake network and quickly obtain network indicators 
+  * DNS names
+  * IP addresses
+  * Packet Signatures
+* Need prevent malware from realizing it is in a virtual environment
+*  ### Apate DNS
+   *  Free tool from Mandiant
+   *  Used to see DNS request made by malware
+   *  Listens to port 53 on the local machine 
+   *  Responds to DNS requests with DNS response set to IP address specified
+   *  Can display hex and ASCII results of requests received
+   *  Can catch additional domains used by a malware through the use of the nonexistent domain
+      *  Malware usually loop through domains stored if the first one doesnt work
+   *  <img src="img/dns.png">
+* ### Monitoring with Netcat
+  * Can be used over inbound/outbound connection for
+    * Port scanning
+    * tunneling
+    * proxying
+    * port forwarding 
+    * and many more!
+  * Listen mode - server
+  * Connect mode -client
+  * Takes data from standard input for transmission over the network
+  * All data received is outputted to the screen via standard output
+  * Malware can obfuscate its network traffic by sending request to legit websites when started
+  * <img src="img/nc.png">
+* ### Packet Sniffing with Wireshark
+  * Wireshark is an open source sniffer
+    * packet capture tool that intercepts and logs network traffic
+  * Can help to understand how malware is performing network communication by sniffing packets as the malware communicates
+* ### Using INetSim
+  * INetSIm is a free, Linux based softwareto simulate common Internet services
+  * Set it up on a Linux virtual machine in the same virtual network as malware analysis malware machine
+  * Services provided:
+    * <img src="img/services.png" height=600>
+  * Can be configured to customize the response to requests made by the malware in case 
+    * Helps if malware is waiting for a particular request to proceed with execution
+  * Also records all inbound requests and connections 
+    * Can determine whether malware is connected to a standard service
+    * Can also see the requests the malware is making
+  * Has a dummy service that logs all data received from client regardless of port 
+    * Useful for capturing all traffic from the client to ports not bound to other servuce module
+    * Can use it to record all ports the malware connects and corresponding data that is sent 
