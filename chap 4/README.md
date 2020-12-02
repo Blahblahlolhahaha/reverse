@@ -138,7 +138,7 @@
                 * TF (Trap Flag)
                     * Used for debugging
                     * Execute only one instruction at a time if this flag is set
-        * ### Instruction pointers
+        * #### Instruction pointers
             * Keep track of next instruction to execute
             * Called the EIP
             * If corrupted, CPU will not be able to fetch legitimate to execute, causing program to crash
@@ -209,9 +209,67 @@
             * xor/and/or destination, source
         * xor is being used to clear a register
             * xor eax, eax is more efficient way compared to mov eax, 0 because it takes up lesser space
-        * shr shl
-            * used to shift registers
-            * Syntax
-                * shr/shl destination count
-            * shift bits in destination operand by right and left respectively by count
-
+    * shr shl
+        * used to shift registers
+        * Syntax
+            * shr/shl destination count
+        * shift bits in destination operand by right and left respectively by count
+    * ror/rol
+      * Circular shift
+        * bits that fall off will be rotated to the other end
+        * least significant to most significant for ror
+        * most significant to least significant for rol
+    * Shifting Used in placed of multiplication for optimization
+      * simpler and faster 
+      * Does not need to set up registers and move data around
+      * When shr/shl eax x is used, it means eax x 2<sup>x</sup>
+      * Excessive use probably means encryption/compression
+  * #### NOP
+    * Does nothing
+    * Goes to next instruction when issued
+    * Used for NOP sled to prevent buffer overflow
+      * Provides execution padding
+      * Reduces risk malicious shell code will start executing in the middle
+* ### The Stack
+  * Stores memory for functions, local variables and flow control
+  * Characterized by pushing and popping items off
+  * Is a last in, first out structure
+    * If 1,2 is pushed followed by 3, 3 will be popped off first since it was the last item pushed onto the stack
+  * Registers used in a x86 architecture will be ESP and EBP
+    * ESP
+      * Stack pointer
+      * Contains memory address that points to top of the stack
+      * Value changes as items are pushed and popped of the stack
+    * EBP
+      * Base pointer
+      * Stays consistent within a given function
+      * Used as placeholder to keep track location of local variables and parameters
+  * Stack instructions
+    * push
+    * pop
+    * call
+    * leave
+    * enter
+    * ret
+  * allocated in top-down format in memory
+    * higher addresses are used first
+  * Used for short term storage only
+  * Primarily used for management of data exchanged between function calls which varies among compilers
+    * Normally referenced relative to EBP
+  * #### Function Calls
+    * Functions are portions of code within a program that perform a specific task and relatively independant of the remaining code
+    * Main code --> function --> main code
+    * Functions contains (cdecl convention):
+      * Prologue 
+        * Few lines code at the start of function
+        * Prepares stack and registers for use within the function
+      * Epilogue
+        * Restores stack and registers to the state before function is called
+    * Common implementation for function calls
+      * <img src="img/implementation.png">
+    * #### Stack Layout
+      * Top down fashion
+      * New stack frame generated every time call is performed
+      * Each function maintains own stack frame until it returns
+        * Caller's stack frame restored
+        * Execution transferred back to caller 
